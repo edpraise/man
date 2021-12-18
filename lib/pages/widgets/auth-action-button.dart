@@ -1,4 +1,4 @@
-import 'dart:io';
+
 
 import 'package:face_net_authentication/pages/db/database.dart';
 import 'package:face_net_authentication/pages/models/user.model.dart';
@@ -31,7 +31,8 @@ class _AuthActionButtonState extends State<AuthActionButton> {
       TextEditingController(text: '');
   final TextEditingController _passwordTextEditingController =
       TextEditingController(text: '');
-
+  final TextEditingController _courseController =
+      TextEditingController(text: '');
   User predictedUser;
 
   Future _signUp(context) async {
@@ -59,6 +60,7 @@ class _AuthActionButtonState extends State<AuthActionButton> {
               builder: (BuildContext context) => Profile(
                     this.predictedUser.user,
                     imagePath: _cameraService.imagePath,
+                    course: '',
                   )));
     } else {
       showDialog(
@@ -145,6 +147,13 @@ class _AuthActionButtonState extends State<AuthActionButton> {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+          AppTextField(
+            controller: _courseController,
+            labelText: "Course",
+          ),
+          SizedBox(
+            height: 10,
+          ),
           widget.isLogin && predictedUser != null
               ? Container(
                   child: Text(

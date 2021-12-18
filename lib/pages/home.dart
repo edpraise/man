@@ -1,12 +1,11 @@
 import 'package:face_net_authentication/pages/db/database.dart';
 import 'package:face_net_authentication/pages/sign-in.dart';
 import 'package:face_net_authentication/pages/sign-up.dart';
+import 'package:face_net_authentication/pages/widgets/welcomeScreen.dart';
 import 'package:face_net_authentication/services/facenet.service.dart';
 import 'package:face_net_authentication/services/ml_kit_service.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key}) : super(key: key);
@@ -23,8 +22,8 @@ class _MyHomePageState extends State<MyHomePage> {
   CameraDescription cameraDescription;
   bool loading = false;
 
-  String githubURL =
-      "https://github.com/MCarlomagno/FaceRecognitionAuth/tree/master";
+  // String githubURL =
+  //     "https://github.com/MCarlomagno/FaceRecognitionAuth/tree/master";
 
   @override
   void initState() {
@@ -60,43 +59,59 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  void _launchURL() async => await canLaunch(githubURL)
-      ? await launch(githubURL)
-      : throw 'Could not launch $githubURL';
+  // void _launchURL() async => await canLaunch(githubURL)
+  //     ? await launch(githubURL)
+  //     : throw 'Could not launch $githubURL';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0XFFC7FFBE),
+      backgroundColor: Colors.white,
       appBar: AppBar(
         leading: Container(),
         elevation: 0,
         backgroundColor: Colors.transparent,
         actions: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(right: 20, top: 20),
-            child: PopupMenuButton<String>(
-              child: Icon(
-                Icons.more_vert,
-                color: Colors.black,
-              ),
-              onSelected: (value) {
-                switch (value) {
-                  case 'Clear DB':
-                    _dataBaseService.cleanDB();
-                    break;
-                }
-              },
-              itemBuilder: (BuildContext context) {
-                return {'Clear DB'}.map((String choice) {
-                  return PopupMenuItem<String>(
-                    value: choice,
-                    child: Text(choice),
-                  );
-                }).toList();
-              },
-            ),
-          ),
+          // GestureDetector(
+          //   onTap: () {
+          //     Navigator.push(
+          //       context,
+          //       MaterialPageRoute(
+          //           builder: (BuildContext context) => CourseSelectionScreen()),
+          //     );
+          //   },
+          //   child: Padding(
+          //     padding: const EdgeInsets.all(10.0),
+          //     child: Text(
+          //       'Admin',
+          //       style: TextStyle(color: Colors.black, fontSize: 20),
+          //     ),
+          //   ),
+          // )
+          // Padding(
+          // padding: EdgeInsets.only(right: 20, top: 20),
+          // child: PopupMenuButton<String>(
+          //   child: Icon(
+          //     Icons.more_vert,
+          //     color: Colors.black,
+          //   ),
+          //   onSelected: (value) {
+          //     switch (value) {
+          //       case 'Clear DB':
+          //         _dataBaseService.cleanDB();
+          //         break;
+          //     }
+          //   },
+          // itemBuilder: (BuildContext context) {
+          //   return {'Clear DB'}.map((String choice) {
+          //     return PopupMenuItem<String>(
+          //       value: choice,
+          //       child: Text(choice),
+          //     );
+          //   }).toList();
+          // },
+          // ),
+          // ),
         ],
       ),
       body: !loading
@@ -105,22 +120,24 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    Image(image: AssetImage('assets/logo.png')),
+                    // Image(image: AssetImage('assets/logo.png')),
                     Container(
                       width: MediaQuery.of(context).size.width * 0.8,
                       child: Column(
                         children: [
                           Text(
-                            "FACE RECOGNITION AUTHENTICATION",
+                            "Face Auth",
                             style: TextStyle(
-                                fontSize: 25, fontWeight: FontWeight.bold),
+                                color: Colors.black,
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold),
                             textAlign: TextAlign.center,
                           ),
                           SizedBox(
                             height: 20,
                           ),
                           Text(
-                            "Demo application that uses Flutter and tensorflow to implement authentication with facial recognition",
+                            "An application that uses Flutter and tensorflow to implement attendance authentication with facial recognition",
                             style: TextStyle(
                               fontSize: 16,
                             ),
@@ -145,7 +162,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           child: Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
-                              color: Colors.white,
+                              color: Colors.black,
                               boxShadow: <BoxShadow>[
                                 BoxShadow(
                                   color: Colors.blue.withOpacity(0.1),
@@ -162,13 +179,13 @@ class _MyHomePageState extends State<MyHomePage> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  'LOGIN',
-                                  style: TextStyle(color: Color(0xFF0F0BDB)),
+                                  'Join a class',
+                                  style: TextStyle(color: Colors.white),
                                 ),
                                 SizedBox(
                                   width: 10,
                                 ),
-                                Icon(Icons.login, color: Color(0xFF0F0BDB))
+                                Icon(Icons.login, color: Colors.white)
                               ],
                             ),
                           ),
@@ -207,13 +224,14 @@ class _MyHomePageState extends State<MyHomePage> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  'SIGN UP',
+                                  'Register Face Id to login',
                                   style: TextStyle(color: Colors.white),
                                 ),
                                 SizedBox(
                                   width: 10,
                                 ),
-                                Icon(Icons.person_add, color: Colors.white)
+                                Icon(Icons.app_registration,
+                                    color: Colors.white)
                               ],
                             ),
                           ),
@@ -225,42 +243,42 @@ class _MyHomePageState extends State<MyHomePage> {
                             thickness: 2,
                           ),
                         ),
-                        InkWell(
-                          onTap: _launchURL,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.black,
-                              boxShadow: <BoxShadow>[
-                                BoxShadow(
-                                  color: Colors.blue.withOpacity(0.1),
-                                  blurRadius: 1,
-                                  offset: Offset(0, 2),
-                                ),
-                              ],
-                            ),
-                            alignment: Alignment.center,
-                            padding: EdgeInsets.symmetric(
-                                vertical: 14, horizontal: 16),
-                            width: MediaQuery.of(context).size.width * 0.8,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'CONTRIBUTE',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                FaIcon(
-                                  FontAwesomeIcons.github,
-                                  color: Colors.white,
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
+                        // InkWell(
+                        //   onTap: _launchURL,
+                        //   child: Container(
+                        //     decoration: BoxDecoration(
+                        //       borderRadius: BorderRadius.circular(10),
+                        //       color: Colors.black,
+                        //       boxShadow: <BoxShadow>[
+                        //         BoxShadow(
+                        //           color: Colors.blue.withOpacity(0.1),
+                        //           blurRadius: 1,
+                        //           offset: Offset(0, 2),
+                        //         ),
+                        //       ],
+                        //     ),
+                        //     alignment: Alignment.center,
+                        //     padding: EdgeInsets.symmetric(
+                        //         vertical: 14, horizontal: 16),
+                        //     width: MediaQuery.of(context).size.width * 0.8,
+                        //     child: Row(
+                        //       mainAxisAlignment: MainAxisAlignment.center,
+                        //       children: [
+                        //         Text(
+                        //           'CONTRIBUTE',
+                        //           style: TextStyle(color: Colors.white),
+                        //         ),
+                        //         SizedBox(
+                        //           width: 10,
+                        //         ),
+                        //         FaIcon(
+                        //           FontAwesomeIcons.github,
+                        //           color: Colors.white,
+                        //         )
+                        //       ],
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     )
                   ],
